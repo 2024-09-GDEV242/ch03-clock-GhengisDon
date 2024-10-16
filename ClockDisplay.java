@@ -5,7 +5,7 @@
  * 
  * The ClockDisplay class implements a digital clock display for a
  * European-style 24 hour clock. The clock shows hours and minutes. The 
- * range of the clock is 00:00 (midnight) to 23:59 (one minute before 
+ * range of the clock is 00:00 (midnight) to 11:59 (one minute before 
  * midnight).
  * 
  * The clock display receives "ticks" (via the timeTick method) every minute
@@ -20,17 +20,18 @@ public class ClockDisplay
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
-    private String displayPhase; //this should be indicitive of AM/PM cycle
+    private String displayStatus; //this should be indicitive of AM/PM cycle
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
      * creates a new clock set at 00:00.
+     * the inclusion of String to indicate Status of the morning or the afternoon
      */
     public ClockDisplay()
     {
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
-        Phase = new displayPhase();
+        String Status= new String();
         updateDisplay();
     }
 
@@ -38,12 +39,17 @@ public class ClockDisplay
      * Constructor for ClockDisplay objects. This constructor
      * creates a new clock set at the time specified by the 
      * parameters.
+     * 
+     * there is the addition of boolean displayStatus now
+     * this is a true or false that is supposed to eventually be set up
+     * if true, display AM
+     * if false, display PM
      */
-    public ClockDisplay(int hour, int minute,String Phase)
+    public ClockDisplay(int hour, int minute,boolean displayStatus)
     {
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
-        setTime(hour, minute,Phase);
+        setTime(hour, minute,displayStatus);
     }
 
     /**
@@ -63,11 +69,11 @@ public class ClockDisplay
      * Set the time of the display to the specified hour and
      * minute.
      */
-    public void setTime(int hour, int minute)
+    public void setTime(int hour, int minute,boolean DayStatus)
     {
         hours.setValue(hour);
         minutes.setValue(minute);
-        updateDisplay();
+
     }
 
     /**
@@ -84,6 +90,6 @@ public class ClockDisplay
     private void updateDisplay()
     {
         displayString = hours.getDisplayValue() + ":" + 
-                        minutes.getDisplayValue();
+                        minutes.getDisplayValue()+""+displayStatus;
     }
 }
